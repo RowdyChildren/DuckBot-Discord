@@ -271,7 +271,7 @@ const handlers = {
     if (event.text.match("!tom")) {
         if (event.channel == "GC7LSKHLH") {
 
-          slack.sendMessage("<@DAPDLTG6T> is stupid", event.channel);
+          slack.sendMessage("@<DAPDLTG6T> is stupid", event.channel);
         }
 
 
@@ -279,7 +279,6 @@ const handlers = {
     if ( ! item || ! operation ) {
       return false;
     }
-
     // Bail if the user is trying to ++ themselves...
     if ( item === event.user && '+' === operation ) {
       handleSelfPlus( event.user, event.channel );
