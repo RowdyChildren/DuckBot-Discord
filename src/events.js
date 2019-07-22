@@ -271,7 +271,7 @@ const handlers = {
     if (event.text.match("!tom")) {
         if (event.channel == "GC7LSKHLH") {
 
-          slack.sendMessage("@<U4EA73N2H> is stupid", event.channel);
+          slack.sendMessage("<@U4EA73N2H> is stupid", event.channel);
         }
 
 
