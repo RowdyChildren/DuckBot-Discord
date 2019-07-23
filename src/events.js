@@ -81,7 +81,7 @@ const handlePlusRandom = async( item, operation, channel ) => {
 };
 const sendRemainingOps = async( event) => {
 
-        return slack.sendMessage( '<@' + event.user + '> has ' + points.getRemainingOps + ' operations left' , event.channel );
+        return slack.sendMessage( '<@' + event.user + '> has ' + points.getRemainingOps(event.user) + ' operations left' , event.channel );
 };
 
 
