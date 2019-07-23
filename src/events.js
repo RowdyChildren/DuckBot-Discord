@@ -79,6 +79,13 @@ const handlePlusRandom = async( item, operation, channel ) => {
 
   return slack.sendMessage( message, channel );
 };
+const sendRemainingOps = async( event) => {
+
+
+        message = '<@' + event.user + '> has ' + points.getRemainingOps + ' operations left';
+        return slack.sendMessage( , channel );
+};
+
 
 /**
  * Handles a quack against a user, and then notifies the channel of the new score.
@@ -337,6 +344,7 @@ const handlers = {
       thx: sayThankyou,
       thanks: sayThankyou,
       thankyou: sayThankyou,
+      remainingops: sendRemainingOps,
       '++': handlePlusMinus,
       '--': handlePlusMinus,
       '==': handlePlusEqual

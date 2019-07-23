@@ -275,11 +275,48 @@ const userOperations =  dbSelect.rows[0].operations
 
 };
 
+
+const getRemainingOps = async (user) => {
+
+  const dbClient = await postgres.connect();
+  
+  await dbClient.query( '\
+     CREATE EXTENSION IF NOT EXISTS citext; \
+   CREATE TABLE IF NOT EXISTS ' + userTrackerTableName + ' (theuser CITEXT PRIMARY KEY, operations INTEGER, ts INTEGER); \
+   ' );
+
+  var dbSelect = await dbClient.query( '\
+  SELECT * FROM ' + userTrackerTableName + ' WHERE theuser = \'' + user + '\'; \
+' );
+
+if (dbSelect.rows.length < 1) {
+  await dbClient.query( '\
+  INSERT INTO ' + userTrackerTableName + ' VALUES (\'' + user + '\', 0, ' + (Math.floor(new Date() / 1000) ) + '  ) \
+  ON CONFLICT (theuser) DO UPDATE SET operations = 0, ts = ' + (Math.floor(new Date() / 1000) ) + ' ; \
+' );
+var dbSelect = await dbClient.query( '\
+SELECT * FROM ' + userTrackerTableName + ' WHERE theuser = \'' + user + '\'; \
+' );
+}
+  
+
+
+    await dbClient.release();
+    return (20 - dbSelect.rows[0].operations);
+
+ 
+
+
+
+};
+
 module.exports = {
   retrieveTopScores,
   updateScore,
   randomScore,
   reallyRandomScore,
   getScore,
-  checkCanUpdate
+  checkCanUpdate,
+  getRemainingOps
+
 };
